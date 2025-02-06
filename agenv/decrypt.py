@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 DEFAULT_IDENTITY = os.path.expanduser("~/.age/key")
 
-def decrypt(infile: str, identity: str = "") -> str:
+def decrypt(file: str, identity: str = "") -> str:
     """Decrypts an .age encrypted file and returns its content as a string."""
     if not identity:
         age_secret_key = os.getenv("AGE_SECRET_KEY")
@@ -19,7 +19,7 @@ def decrypt(infile: str, identity: str = "") -> str:
             else:
                 identity = DEFAULT_IDENTITY
 
-    cmd = f"age -d -i {identity} '{infile}'"
+    cmd = f"age -d -i {identity} '{file}'"
 
     try:
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True, check=True)

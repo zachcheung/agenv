@@ -13,10 +13,25 @@ pip install agenv
 
 ## Usage
 
+#### Loading Environment Variables
+
 ```python
 from agenv import load_age_env
 
-load_age_env(".env.age")  # Decrypts and loads environment variables
+# Decrypts and loads environment variables from a .env.age file
+load_age_env(".env.age")
+```
+
+#### Decrypting and Loading YAML Data
+
+```python
+import yaml
+from agenv import decrypt
+
+# Decrypts the .age encrypted file and loads the content as a YAML object
+yaml_str = decrypt("database.yml.age")
+data = yaml.safe_load(yaml_str)
+print(data)
 ```
 
 ### Identity Key Selection Order

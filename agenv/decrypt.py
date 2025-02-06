@@ -8,10 +8,11 @@ DEFAULT_IDENTITY = os.path.expanduser("~/.age/key")
 
 def decrypt(file: str, identity: str = "") -> str:
     """Decrypts an .age encrypted file and returns its content as a string."""
+    cmd = ""
     if not identity:
         age_secret_key = os.getenv("AGE_SECRET_KEY")
         if age_secret_key:
-            identity = f"<(echo {age_secret_key})"
+            cmd = f"age -d -i <(echo {age_secret_key}) '{file}'"
         else:
             age_secret_key_file = os.getenv("AGE_SECRET_KEY_FILE")
             if age_secret_key_file:
@@ -19,7 +20,8 @@ def decrypt(file: str, identity: str = "") -> str:
             else:
                 identity = DEFAULT_IDENTITY
 
-    cmd = f"age -d -i {identity} '{file}'"
+    if not cmd:
+        cmd = f"age -d -i '{identity}' '{file}'"
 
     try:
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True, check=True)

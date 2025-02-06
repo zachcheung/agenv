@@ -10,7 +10,7 @@ def generate_age_key_and_env():
     """Fixture to generate an age key and encrypted .env.age file for testing."""
 
     # Step 1: Generate an age key
-    key_file = "key.txt"
+    key_file = "test_key.txt"
     subprocess.run(["age-keygen", "-o", key_file], check=True)
 
     # Step 2: Prepare environment variables as a string (instead of using a file)

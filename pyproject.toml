@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agenv"
-version = "0.1.0"
+version = "0.2.0"
 description = "Load environment variables from age-encrypted files"
 readme = "README.md"
 authors = [{ name = "Zach Cheung", email = "kuroro.zhang@gmail.com" }]
-license = { file = "LICENSE" }
+license = { text = "MIT" }
 dependencies = ["python-dotenv"]
 requires-python = ">=3.7"
 

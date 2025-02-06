@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agenv"
-version = "0.2.1"
+version = "0.2.2"
 description = "Load environment variables from age-encrypted files"
 readme = "README.md"
 authors = [{ name = "Zach Cheung", email = "kuroro.zhang@gmail.com" }]

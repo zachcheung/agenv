@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 from agenv import load_age_env
 
+
 @pytest.fixture(scope="module")
 def generate_age_key_and_env():
     """Fixture to generate an age key and encrypted .env.age file for testing."""

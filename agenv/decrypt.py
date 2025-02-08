@@ -5,7 +5,7 @@ from io import StringIO
 
 from dotenv import load_dotenv
 
-DEFAULT_IDENTITY = os.path.expanduser("~/.age/key")
+DEFAULT_IDENTITY = os.path.expanduser("~/.age/age.key")
 
 
 def decrypt(file: str, identity: str = "") -> str:

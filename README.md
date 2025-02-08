@@ -41,7 +41,7 @@ agenv determines the age identity key in the following order:
 1. The `identity` parameter provided to `load_age_env()`
 2. The `AGE_SECRET_KEY` environment variable
 3. The `AGE_SECRET_KEY_FILE` environment variable (path to key file)
-4. The default key file: `~/.age/key`
+4. The default key file: `$HOME/.age/age.key`
 
 If no valid identity is found, decryption will fail.
 

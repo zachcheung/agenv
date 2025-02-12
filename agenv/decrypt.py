@@ -3,7 +3,11 @@ import subprocess
 import tempfile
 from io import StringIO
 
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    DOTENV_AVAILABLE = True
+except ImportError:
+    DOTENV_AVAILABLE = False
 
 DEFAULT_IDENTITY = os.path.expanduser("~/.age/age.key")
 
@@ -40,5 +44,11 @@ def decrypt(file: str, identity: str = "") -> str:
 
 def load_age_env(envfile: str = ".env.age", identity: str = "") -> None:
     """Decrypts an .age encrypted environment file and loads it into os.environ."""
+    if not DOTENV_AVAILABLE:
+        raise ImportError(
+            "The 'python-dotenv' package is required to use load_age_env. "
+            "Install it with `pip install agenv[dotenv]`."
+        )
+
     decrypted = decrypt(envfile, identity)
     load_dotenv(stream=StringIO(decrypted))

@@ -4,8 +4,20 @@ A simple Python package for securely loading environment variables from age encr
 
 ## Installation
 
+### Basic Installation (Decryption Only)
+
+If you only need to decrypt files at runtime:
+
 ```sh
 pip install agenv
+```
+
+### With dotenv Support (Load Encrypted Environment Variables)
+
+If you need to load encrypted environment variables automatically:
+
+```sh
+pip install agenv[dotenv]
 ```
 
 > [!NOTE]

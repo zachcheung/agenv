@@ -46,10 +46,10 @@ def decrypt(file: Union[str, IO], identity: str = "") -> str:
     else:
         raise TypeError("file must be a path or a file-like object with a 'name' attribute")
 
-    cmd = f"age -d -i '{identity}' '{file_path}'"
+    cmd = ["age", "-d", "-i", identity, file_path]
 
     try:
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, check=True)
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         return result.stdout
     except subprocess.CalledProcessError as e:
         raise RuntimeError(f"Decryption failed: {e.stderr.strip()}") from e

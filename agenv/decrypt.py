@@ -2,6 +2,7 @@ import os
 import subprocess
 import tempfile
 from io import StringIO
+from typing import Union, IO
 
 try:
     from dotenv import load_dotenv
@@ -12,9 +13,17 @@ except ImportError:
 DEFAULT_IDENTITY = os.path.expanduser("~/.age/age.key")
 
 
-def decrypt(file: str, identity: str = "") -> str:
-    """Decrypts an .age encrypted file and returns its content as a string."""
-    temp_key_file_path = ""
+def decrypt(file: Union[str, IO], identity: str = "") -> str:
+    """Decrypts an .age encrypted file and returns its content as a string.
+
+    Args:
+        file: A path to the .age file or a file-like object.
+        identity: Optional path to an age identity key file.
+
+    Returns:
+        The decrypted content as a string.
+    """
+    temp_key_file_path, file_path = "", ""
 
     if not identity:
         age_secret_key = os.getenv("AGE_SECRET_KEY")
@@ -30,7 +39,14 @@ def decrypt(file: str, identity: str = "") -> str:
             else:
                 identity = DEFAULT_IDENTITY
 
-    cmd = f"age -d -i '{identity}' '{file}'"
+    if isinstance(file, str):
+        file_path = file
+    elif hasattr(file, "name"):
+        file_path = file.name
+    else:
+        raise TypeError("file must be a path or a file-like object with a 'name' attribute")
+
+    cmd = f"age -d -i '{identity}' '{file_path}'"
 
     try:
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True, check=True)

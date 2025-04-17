@@ -90,3 +90,15 @@ def test_load_without_any_key(mock_env_vars, generate_age_key_and_env):
         assert os.environ["SECRET_KEY"] == "some-secret-value", "SECRET_KEY was not set correctly"
     except Exception as e:
         pytest.fail(f"Decryption failed with no key set: {e}")
+
+def test_load_with_file_object(mock_env_vars, generate_age_key_and_env):
+    """Test loading environment variables when the encrypted file is passed as a file object."""
+    encrypted_file, key_file = generate_age_key_and_env
+    os.environ["AGE_SECRET_KEY_FILE"] = key_file
+
+    try:
+        with open(encrypted_file, "r") as f:
+            load_age_env(f)  # Pass file object instead of path
+        assert os.environ["SECRET_KEY"] == "some-secret-value", "SECRET_KEY was not set correctly"
+    except Exception as e:
+        pytest.fail(f"Decryption failed with file object: {e}")
